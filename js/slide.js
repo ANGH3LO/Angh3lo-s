@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const antesBtn = document.getElementById('before');
     const siguienteBtn = document.getElementById('next');
     const scrollButton = document.getElementById('scrollToBottom');
-    const moreWordsBtn = document.getElementById('moreWords'); // Botón "Más palabras"
+    const moreWordsBtn = document.getElementById('moreWords');
+    const form = document.getElementById('contactForm'); // Asumiendo que tu formulario tiene este ID
     let indexTestimonio = 0;
 
     function mostrarTestimonio(index) {
@@ -26,12 +27,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Funcionalidad para el botón "Más palabras"
     moreWordsBtn.addEventListener('click', function(event) {
-        event.preventDefault(); // Evita el comportamiento por defecto del enlace
+        event.preventDefault();
         const sectionPosition = wordsSection.getBoundingClientRect().top + window.scrollY;
         
-        // Desplazarte un poco más abajo
         window.scrollTo({
-            top: sectionPosition + 50, // Ajusta este valor según sea necesario
+            top: sectionPosition + 50,
             behavior: 'smooth'
         });
     });
@@ -52,5 +52,43 @@ document.addEventListener('DOMContentLoaded', function() {
             top: document.body.scrollHeight,
             behavior: 'smooth'
         });
+    });
+
+    // Manejar el envío del formulario
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Evita el comportamiento por defecto
+
+        // Obtener los valores del formulario
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        // Aquí podrías enviar los datos al servidor usando fetch o XMLHttpRequest
+        // Ejemplo con fetch (descomenta y ajusta la URL)
+        /*
+        fetch('tu-endpoint-aqui', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Mensaje enviado con éxito');
+                form.reset(); // Resetea el formulario
+            } else {
+                alert('Error al enviar el mensaje');
+            }
+        })
+            */
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al enviar el mensaje');
+        });
+        
+
+        // Simulación de envío exitoso
+        alert('Mensaje enviado con éxito (simulación)');
+        form.reset(); // Resetea el formulario
     });
 });
